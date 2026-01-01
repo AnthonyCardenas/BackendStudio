@@ -26,21 +26,40 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_ID')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "www.brooklynnrosestudio.com",
     "brooklynnrosestudio.com",
-    "18.191.152.147",
+    # "api.brooklynnrosestudio.com",
+    # "18.191.152.147",
+    "52.14.193.53",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://ipaddr.s3.amazonaws.com",
+# ]
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://brooklynnrosestudio.com",
+# ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    # "http://18.191.152.147:8000",
+    # "52.14.193.53:8000",
+    "https://www.brooklynnrosestudio.com",
+    "http://www.brooklynnrosestudio.com",
+    "https://brooklynnrosestudio.com",
+    "http://brooklynnrosestudio.com",
+]
+CORS_ALLOW_CREDENTIALS = True
 
 # EMAIL Settings
 
@@ -79,7 +98,7 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.ScopedRateThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "contact": "2/hour",
+        "contact": "3/hour",
     },
 }
 
@@ -108,6 +127,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'storages',
+    # 'whitenoise.runserver_nostatic', # Serve static in production
 
     'gallery',
     'reviews',
@@ -117,6 +137,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware', # serve static in production
     
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -151,12 +172,25 @@ WSGI_APPLICATION = 'rose_studio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Local Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+#Production
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASS'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': os.getenv('DB_PORT'),
+#     }
+# }
 
 
 # Password validation
