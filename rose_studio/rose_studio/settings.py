@@ -158,6 +158,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                "django.template.context_processors.debug",
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -236,6 +237,7 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
 
 AWS_S3_FILE_OVERWRITE = False
+AWS_LOCATION = "static"
 # AWS_DEFAULT_ACL = None
 # AWS_QUERYSTRING_AUTH = False
 
@@ -270,16 +272,17 @@ STORAGES = {
 # AWS Storage
 STATIC_LOCATION = "static"
 STATIC_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{STATIC_LOCATION}/"
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Reference to frontend
+# Reference to frontend in local production
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "FrontendStudio/studio-app/build/static"),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "FrontendStudio/studio-app/build/static"),
+# ]
 
-TEMPLATES[0]['DIRS'] = [
-    os.path.join(BASE_DIR, "FrontendStudio/studio-app/build")
-]
+# TEMPLATES[0]['DIRS'] = [
+#     os.path.join(BASE_DIR, "FrontendStudio/studio-app/build")
+# ]
 
 
 # Dev local storage
